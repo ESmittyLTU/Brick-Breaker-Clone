@@ -9,10 +9,10 @@ public class Brick : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         transform.localScale -= new Vector3(0.3f, 1, 0.3f);
-        brickHealth--;
+        brickHealth -= GetComponent<Ball>().piercesLeft;
 
         //Kills object if # of times hit = brick health
-        if (brickHealth == 0 )
+        if (brickHealth <= 0 )
         {
             Destroy(gameObject);
         }

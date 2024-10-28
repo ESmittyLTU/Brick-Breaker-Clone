@@ -8,6 +8,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public float startSpeed = 10.0f;
+    public int piercesLeft = 0;
 
     void Start()
     {
@@ -39,7 +40,6 @@ public class Ball : MonoBehaviour
         float startMagnitude = startVector.magnitude;
 
         float speedMult;
-        int piercesLeft = 0;
 
         // When ball hits the paddle, determine the speed multiplier, set the speed of the ball (magnitude) to the start speed times the speed multiplier,
         // set the amount of pierces the ball has, and change the color accordingly
@@ -71,18 +71,18 @@ public class Ball : MonoBehaviour
             GetComponent<Rigidbody>().velocity = transform.forward * magnitude;
 
         }
-        //If ball collides with brick, subtract the bricks health from the pierces remaining and destroy the brick if necessary
+        //If ball collides with brick, determine piercesLeft based on magnitude range of the ball (-0.5f for leeway)
         if (other.gameObject.CompareTag("Brick"))
         {
-            if (GameManager.mouseSpeed >= 4)
+            if (velo.magnitude >= 2f * startMagnitude - 0.5f)
             {
                 piercesLeft = 3;
             }
-            else if (GameManager.mouseSpeed >= 2)
+            else if (velo.magnitude >= 1.75f * startMagnitude - 0.5f)
             {
                 piercesLeft = 2;
             }
-            else if (GameManager.mouseSpeed >= 1.1)
+            else if (velo.magnitude >= 1.3f * startMagnitude - 0.5f)
             {
                 piercesLeft = 1;
             }
@@ -101,6 +101,7 @@ public class Ball : MonoBehaviour
                     piercesLeft = 0;
                 }
             }
+
             Debug.Log("THE NUMBER OF PIERCES LEFT IS "+piercesLeft);
             if (brickHealth - piercesLeft <= 0)
             {
