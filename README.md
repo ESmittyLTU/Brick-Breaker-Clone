@@ -24,7 +24,7 @@ Use the mouse to control the paddle. Use the paddle to hit the ball (as fast as 
 
 2. **What creative additions did you make? How can we find them?**
 
-Use 
+The ball scales with speed according to how fast you hit it with the paddle. If the ball is going fast enough, it can pierce through bricks without bouncing away, dealing more damage in the process.
 
 <br>
 
