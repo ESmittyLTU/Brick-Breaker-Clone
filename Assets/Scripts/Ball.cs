@@ -8,7 +8,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public float startSpeed = 10.0f;
-    public int piercesLeft = 0;
+    public int speedDamage = 0;
 
     void Start()
     {
@@ -40,75 +40,85 @@ public class Ball : MonoBehaviour
         float startMagnitude = startVector.magnitude;
 
         float speedMult;
+        bool pierce = false;
 
-        // When ball hits the paddle, determine the speed multiplier, set the speed of the ball (magnitude) to the start speed times the speed multiplier,
-        // set the amount of pierces the ball has, and change the color accordingly
+        // In order to change the ball's speed I need to normalize the vector, then multiply that by startSpeed and SpeedMult
+        // When ball hits the paddle, determine the speed multiplier, then set the speed of the ball to the start speed times the speed multiplier,
+        // set the amount of speeddamage the ball has, and change the color accordingly
         if (other.gameObject.CompareTag("Paddle"))
         {
             if (GameManager.mouseSpeed >= 4)
             {
                 speedMult = 2f;
+                speedDamage = 3;
                 GetComponent<Renderer>().material.color = Color.red;
             }
             else if (GameManager.mouseSpeed >= 2)
             {
                 speedMult = 1.75f;
+                speedDamage = 2;
                 GetComponent<Renderer>().material.color = Color.yellow;
             }
             else if (GameManager.mouseSpeed >= 1.1)
             {
                 speedMult = 1.3f;
+                speedDamage = 1;
                 GetComponent<Renderer>().material.color = Color.green;
             }
             else
             {
                 speedMult = 1f;
+                speedDamage = 0;
                 GetComponent<Renderer>().material.color = Color.gray;
             }
             Debug.Log("THE SPEED MULTIPLIER IS " + speedMult);
 
-            magnitude = startMagnitude * speedMult;
-            GetComponent<Rigidbody>().velocity = transform.forward * magnitude;
+            rb.velocity = rb.velocity.normalized * startSpeed * speedMult;
 
         }
-        //If ball collides with brick, determine piercesLeft based on magnitude range of the ball (-0.5f for leeway)
+        //If ball collides with brick, 
         if (other.gameObject.CompareTag("Brick"))
         {
-            if (velo.magnitude >= 2f * startMagnitude - 0.5f)
-            {
-                piercesLeft = 3;
-            }
-            else if (velo.magnitude >= 1.75f * startMagnitude - 0.5f)
-            {
-                piercesLeft = 2;
-            }
-            else if (velo.magnitude >= 1.3f * startMagnitude - 0.5f)
-            {
-                piercesLeft = 1;
-            }
-            else
-            {
-                piercesLeft = 0;
+            //lower the balls speed by startSpeed/2 magnitude (5 mag at startspeed 10) every time the ball collides with a brick and has more than the Starting magnitude + the amount of brick friction
+            //Remember that normalized vector is the direction with a magnitude of 1
+            float brickFriction = startSpeed / 2;
+
+            if (rb.velocity.magnitude >= startVector.magnitude + brickFriction) {
+                rb.velocity = rb.velocity.normalized * (velo.magnitude - brickFriction);
             }
 
-            //If ball collides with brick, subtract the bricks health from the pierces remaining and destroy the brick if necessary
-            int brickHealth = other.gameObject.GetComponent<Brick>().brickHealth;
-            if (piercesLeft > 0)
+            //determine remaining speedDamage
+            if (speedDamage > 0)
             {
-                piercesLeft = piercesLeft - brickHealth;
-                if (piercesLeft < 0)
+                speedDamage -= other.gameObject.GetComponent<Brick>().brickHealth;
+                if (speedDamage < 0)
                 {
-                    piercesLeft = 0;
+                    speedDamage = 0;
                 }
             }
 
-            Debug.Log("THE NUMBER OF PIERCES LEFT IS "+piercesLeft);
-            if (brickHealth - piercesLeft <= 0)
+            //Determine the color of the ball based on the magnitude, this should go from red -> yellow -> green -> gray as the ball bounces around 
+            if (magnitude >= startSpeed * 2f)
             {
-                Destroy(other.gameObject);
+                GetComponent<Renderer>().material.color = Color.red;
             }
+            else if (magnitude >= startSpeed * 1.75f)
+            {
+                GetComponent<Renderer>().material.color = Color.yellow;
+            }
+            else if (magnitude >= startSpeed * 1.3f)
+            {
+                GetComponent<Renderer>().material.color = Color.green;
+            }
+            else
+            {
+                GetComponent<Renderer>().material.color = Color.gray;
+            }
+
+
         }
-        
+        Debug.Log("THE NUMBER OF DAMAGE LEFT IS " + speedDamage);
+
     }
 
 
@@ -124,11 +134,11 @@ public class Ball : MonoBehaviour
 
         Debug.Log("BALL MAG IS CURRENTLY "+magnitude);
 
+        //THIS CODE DOESNT WORK AND SHOULDNT BE NECESSARY ANYMORE
         //Check if the ball ever drops below the starting speed and if it does, set it to the starting speed. Uses magnitude here because Vector3s cannot be compared using less/greater than
-        if (magnitude <= startMagnitude)
+        if (rb.velocity.magnitude <= startMagnitude -0.1f)
         {
-            magnitude = startMagnitude;
-            velo = transform.forward * velo.magnitude;
-        }
+            rb.velocity = rb.velocity.normalized * startMagnitude;
+        } 
     }
 }
