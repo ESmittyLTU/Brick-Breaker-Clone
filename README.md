@@ -24,7 +24,7 @@ Use the mouse to control the paddle. Use the paddle to hit the ball (as fast as 
 
 2. **What creative additions did you make? How can we find them?**
 
-The ball scales with speed according to how fast you hit it with the paddle. If the ball is going fast enough, it can pierce through bricks without bouncing away, dealing more damage in the process.
+The ball scales with speed according to how fast you hit it with the paddle. If the ball is going fast enough, it can pierce through bricks without bouncing away, dealing more damage in the process. The colors change accordingly to indicate varying levels of speed.
 
 <br>
 
@@ -34,37 +34,37 @@ Font:
 https://www.dafont.com/minercraftory.font?l[]=10&l[]=1&l[]=6
 
 Brick Assets:
-
+https://assetstore.unity.com/packages/2d/textures-materials/brick/15-original-bricks-textures-72427#asset_quality
 
 <br>
 
 4. **Did you receive help from anyone outside this class?** <br> (list their names and what they helped with)
-
+Brycen Delisi the G.O.A.T. He helped me with fixing my code so that the brick health was subtracted and that the remaining speedDamage left on the ball was correct. Also helped me implement the pierce mechanic (which though a little janky) was only a couple extra lines of code. Huge help.
 
 
 <br>
 
 5. **Did you get help from any AI Code Assistants?** <br> (Tell us which .cs file to look in for the citation and describe what you learned)
 
-
+Google's automated search response was sometimes good for providing inspecific info on various questions I had, but I never used it or any AI programs to generate code.
 
 <br>
 
 6. **Did you get help from any online websites, videos, or tutorials?** <br> (link them here)
 
-
+Countless unity discussion boards and a handful of stackoverflow questions
 
 <br>
 
 7. **What trouble did you have with this project?**
 
-
+Getting the ball to scale correctly with speed. Figuring out grabbing components and changing the color. Correctly utilizing methods to calculate the brick health and the speed damage (which change because of eachother), in separate classes.  
 
 <br>
 
 8. **Is there anything else we should know?**
 
-
+Nope.
 
 
 <br><br><br><br><br>

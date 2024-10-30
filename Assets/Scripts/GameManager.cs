@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             statusTMP.gameObject.SetActive(true);
             newGameButton.SetActive(true);
             Cursor.visible = true;
-            Destroy(GameObject.Find("Paddle").gameObject);
+            Destroy(GameObject.FindWithTag("Paddle"));
         }
         if (lives <= 0 )
         {
