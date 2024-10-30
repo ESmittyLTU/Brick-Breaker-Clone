@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3f0b33909814c4fb9b8178d40d900b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brickHealth: 2
+  brickHealth: 3

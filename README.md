@@ -30,6 +30,10 @@ The ball scales with speed according to how fast you hit it with the paddle. If 
 
 3. **Any assets used that you didn't create yourself?** <br> (art, music, etc. Just tell us where you got it, link it here)
 
+Font:
+https://www.dafont.com/minercraftory.font?l[]=10&l[]=1&l[]=6
+
+Brick Assets:
 
 
 <br>

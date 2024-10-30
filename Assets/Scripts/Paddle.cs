@@ -27,18 +27,22 @@ public class Paddle : MonoBehaviour
         if (GameManager.mouseSpeed >= 4)
         {
             GetComponent<Renderer>().material.color = Color.red;
+            GetComponent<TrailRenderer>().material.color = Color.red;
         }
         else if (GameManager.mouseSpeed >= 2)
         {
             GetComponent<Renderer>().material.color = Color.yellow;
+            GetComponent<TrailRenderer>().material.color = Color.yellow;
         }
         else if (GameManager.mouseSpeed >= 1.1)
         {
             GetComponent<Renderer>().material.color = Color.green;
+            GetComponent<TrailRenderer>().material.color = Color.green;
         }
         else
         {
             GetComponent<Renderer>().material.color = Color.gray;
+            GetComponent<TrailRenderer>().material.color = Color.gray;
         }
 
     }
